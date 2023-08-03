@@ -1,6 +1,9 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Navigation from "@/components/Navigation/Navigation";
+import Footer from "@/components/Footer/Footer";
+import { DIMENSIONS } from "@/constants/styles";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +21,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex">{children}</main>
+        <Navigation />
+        <main
+          className="flex"
+          style={{
+            minHeight: `calc(100vh - ${
+              DIMENSIONS.NAV_HEIGHT + DIMENSIONS.FOOTER_HEIGHT
+            }px)`,
+          }}
+        >
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );
