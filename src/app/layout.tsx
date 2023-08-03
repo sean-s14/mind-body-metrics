@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navigation from "@/components/Navigation/Navigation";
 import Footer from "@/components/Footer/Footer";
 import { DIMENSIONS } from "@/constants/styles";
+import { Providers } from "./Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,20 +20,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className="dark"
+      style={{ colorScheme: "dark" }}
+      suppressHydrationWarning
+    >
       <body className={inter.className}>
-        <Navigation />
-        <main
-          className="flex"
-          style={{
-            minHeight: `calc(100vh - ${
-              DIMENSIONS.NAV_HEIGHT + DIMENSIONS.FOOTER_HEIGHT
-            }px)`,
-          }}
-        >
-          {children}
-        </main>
-        <Footer />
+        <Providers>
+          <Navigation />
+          <main
+            className="flex bg-slate-300 dark:bg-slate-800 text-slate-600 dark:text-slate-200"
+            style={{
+              minHeight: `calc(100vh - ${
+                DIMENSIONS.NAV_HEIGHT + DIMENSIONS.FOOTER_HEIGHT
+              }px)`,
+            }}
+          >
+            {children}
+          </main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
