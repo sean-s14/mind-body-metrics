@@ -6,9 +6,9 @@ export enum sleepQuality {
 }
 
 export interface ISleep {
-  sleepStart: Date | null;
-  sleepEnd: Date | null;
-  sleepQuality: sleepQuality | null;
-  napStart: Date | null;
-  napEnd: Date | null;
+  sleepStart?: Date;
+  sleepEnd?: Date;
+  sleepQuality?: sleepQuality;
+  napStart?: Date;
+  napEnd?: Date;
 }

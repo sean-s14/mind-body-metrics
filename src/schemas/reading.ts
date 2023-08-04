@@ -1,7 +1,5 @@
-import { Schema, model, models } from "mongoose";
+import { Schema } from "mongoose";
 import { IReading } from "@/types/reading";
-
-mongoose.Promise = global.Promise;
 
 export const READING: IReading = {
   educational: {
@@ -15,33 +13,18 @@ export const READING: IReading = {
   articles: 0,
 };
 
-const readingSchema = new Schema<IReading>({
+export const readingSchemaObject: Record<keyof IReading, any> = {
   educational: {
-    words: {
-      type: Number,
-      default: 0,
-    },
-    pages: {
-      type: Number,
-      default: 0,
-    },
+    words: Number,
+    pages: Number,
   },
   recreational: {
-    words: {
-      type: Number,
-      default: 0,
-    },
-    pages: {
-      type: Number,
-      default: 0,
-    },
+    words: Number,
+    pages: Number,
   },
-  articles: {
-    type: Number,
-    default: 0,
-  },
+  articles: Number,
+};
+
+export const readingSchema = new Schema<IReading>(readingSchemaObject, {
+  _id: false,
 });
-
-const Reading = models.Reading || model<IReading>("Reading", readingSchema);
-
-export default Reading;

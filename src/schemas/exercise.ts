@@ -1,141 +1,48 @@
-import { Schema, model, models } from "mongoose";
-import { IExercise } from "@/types/exercise";
+import { Schema } from "mongoose";
+import { IExercise, IMuscleGroups } from "@/types/exercise";
 
-mongoose.Promise = global.Promise;
+const MUSCLE_GROUPS: IMuscleGroups = {
+  arms: 0,
+  legs: 0,
+  back: 0,
+  chest: 0,
+  shoulders: 0,
+  abs: 0,
+};
 
-export const PHYSICAL_HEALTH: IExercise = {
+export const EXERCISE: IExercise = {
   cardio: {
     walk: 0,
     jog: 0,
     run: 0,
     bike: 0,
   },
-  weightLifting: {
-    arms: 0,
-    legs: 0,
-    back: 0,
-    chest: 0,
-    shoulders: 0,
-    abs: 0,
-  },
-  calisthenics: {
-    arms: 0,
-    legs: 0,
-    back: 0,
-    chest: 0,
-    shoulders: 0,
-    abs: 0,
-  },
-  yoga: {
-    arms: 0,
-    legs: 0,
-    back: 0,
-    chest: 0,
-    shoulders: 0,
-    abs: 0,
-  },
+  weightLifting: MUSCLE_GROUPS,
+  calisthenics: MUSCLE_GROUPS,
+  yoga: MUSCLE_GROUPS,
 };
 
-const exerciseSchema = new Schema<IExercise>({
+const muscleGroupsSchemaObject: Record<keyof IMuscleGroups, any> = {
+  arms: Number,
+  legs: Number,
+  back: Number,
+  chest: Number,
+  shoulders: Number,
+  abs: Number,
+};
+
+export const exerciseSchemaObject: Record<keyof IExercise, any> = {
   cardio: {
-    walk: {
-      type: Number,
-      default: 0,
-    },
-    jog: {
-      type: Number,
-      default: 0,
-    },
-    run: {
-      type: Number,
-      default: 0,
-    },
-    bike: {
-      type: Number,
-      default: 0,
-    },
+    walk: Number,
+    jog: Number,
+    run: Number,
+    bike: Number,
   },
-  weightLifting: {
-    arms: {
-      type: Number,
-      default: 0,
-    },
-    legs: {
-      type: Number,
-      default: 0,
-    },
-    back: {
-      type: Number,
-      default: 0,
-    },
-    chest: {
-      type: Number,
-      default: 0,
-    },
-    shoulders: {
-      type: Number,
-      default: 0,
-    },
-    abs: {
-      type: Number,
-      default: 0,
-    },
-  },
-  calisthenics: {
-    arms: {
-      type: Number,
-      default: 0,
-    },
-    legs: {
-      type: Number,
-      default: 0,
-    },
-    back: {
-      type: Number,
-      default: 0,
-    },
-    chest: {
-      type: Number,
-      default: 0,
-    },
-    shoulders: {
-      type: Number,
-      default: 0,
-    },
-    abs: {
-      type: Number,
-      default: 0,
-    },
-  },
-  yoga: {
-    arms: {
-      type: Number,
-      default: 0,
-    },
-    legs: {
-      type: Number,
-      default: 0,
-    },
-    back: {
-      type: Number,
-      default: 0,
-    },
-    chest: {
-      type: Number,
-      default: 0,
-    },
-    shoulders: {
-      type: Number,
-      default: 0,
-    },
-    abs: {
-      type: Number,
-      default: 0,
-    },
-  },
+  weightLifting: muscleGroupsSchemaObject,
+  calisthenics: muscleGroupsSchemaObject,
+  yoga: muscleGroupsSchemaObject,
+};
+
+export const exerciseSchema = new Schema<IExercise>(exerciseSchemaObject, {
+  _id: false,
 });
-
-const Exercise =
-  models.Exercise || model<IExercise>("Exercise", exerciseSchema);
-
-export default Exercise;

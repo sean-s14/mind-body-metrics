@@ -1,40 +1,26 @@
-import { Schema, model, models } from "mongoose";
+import { Schema } from "mongoose";
 import { ISleep } from "@/types/sleep";
 
-mongoose.Promise = global.Promise;
-
 export const SLEEP: ISleep = {
-  sleepStart: null,
-  sleepEnd: null,
-  sleepQuality: null,
-  napStart: null,
-  napEnd: null,
+  sleepStart: undefined,
+  sleepEnd: undefined,
+  sleepQuality: undefined,
+  napStart: undefined,
+  napEnd: undefined,
 };
 
-const sleepSchema = new Schema<ISleep>({
-  sleepStart: {
-    type: Date,
-    default: null,
-  },
-  sleepEnd: {
-    type: Date,
-    default: null,
-  },
+export const sleepSchemaObject: Record<keyof ISleep, any> = {
+  sleepStart: Date,
+  sleepEnd: Date,
   sleepQuality: {
     type: String,
     enum: ["poor", "fair", "good", "excellent"],
-    default: null,
+    default: undefined,
   },
-  napStart: {
-    type: Date,
-    default: null,
-  },
-  napEnd: {
-    type: Date,
-    default: null,
-  },
+  napStart: Date,
+  napEnd: Date,
+};
+
+export const sleepSchema = new Schema<ISleep>(sleepSchemaObject, {
+  _id: false,
 });
-
-const Sleep = models.Sleep || model<ISleep>("Sleep", sleepSchema);
-
-export default Sleep;

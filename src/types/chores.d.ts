@@ -1,3 +1,3 @@
 export interface IChores {
-  dishWashing: number;
+  dishWashing?: number;
 }

@@ -1,7 +1,5 @@
-import { Schema, model, models } from "mongoose";
+import { Schema } from "mongoose";
 import { INutrition } from "@/types/nutrition";
-
-mongoose.Promise = global.Promise;
 
 export const NUTRITION: INutrition = {
   waterDrank: 0,
@@ -34,92 +32,37 @@ export const NUTRITION: INutrition = {
   },
 };
 
-const nutritionSchema = new Schema<INutrition>({
-  waterDrank: {
-    type: Number,
-    default: 0,
-  },
-  calories: {
-    type: Number,
-    default: 0,
-  },
+export const nutritionSchemaObject: Record<keyof INutrition, any> = {
+  waterDrank: Number,
+  calories: Number,
   protein: {
-    animal: {
-      type: Number,
-      default: 0,
-    },
-    plant: {
-      type: Number,
-      default: 0,
-    },
-    unknown: {
-      type: Number,
-      default: 0,
-    },
+    animal: Number,
+    plant: Number,
+    unknown: Number,
   },
   fat: {
-    saturated: {
-      type: Number,
-      default: 0,
-    },
-    monounsaturated: {
-      type: Number,
-      default: 0,
-    },
-    polyunsaturated: {
-      type: Number,
-      default: 0,
-    },
-    trans: {
-      type: Number,
-      default: 0,
-    },
-    unknown: {
-      type: Number,
-      default: 0,
-    },
+    saturated: Number,
+    monounsaturated: Number,
+    polyunsaturated: Number,
+    trans: Number,
+    unknown: Number,
   },
   carbs: {
-    starch: {
-      type: Number,
-      default: 0,
-    },
+    starch: Number,
     fiber: {
-      soluble: {
-        type: Number,
-        default: 0,
-      },
-      insoluble: {
-        type: Number,
-        default: 0,
-      },
-      unknown: {
-        type: Number,
-        default: 0,
-      },
+      soluble: Number,
+      insoluble: Number,
+      unknown: Number,
     },
     sugar: {
-      natural: {
-        type: Number,
-        default: 0,
-      },
-      added: {
-        type: Number,
-        default: 0,
-      },
-      unknown: {
-        type: Number,
-        default: 0,
-      },
+      natural: Number,
+      added: Number,
+      unknown: Number,
     },
-    unknown: {
-      type: Number,
-      default: 0,
-    },
+    unknown: Number,
   },
+};
+
+export const nutritionSchema = new Schema<INutrition>(nutritionSchemaObject, {
+  _id: false,
 });
-
-const Nutrition =
-  models.Nutrition || model<INutrition>("Nutrition", nutritionSchema);
-
-export default Nutrition;

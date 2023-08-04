@@ -1,39 +1,22 @@
-import { Schema, model, models } from "mongoose";
+import { Schema } from "mongoose";
 import { IHygiene } from "@/types/hygiene";
-
-mongoose.Promise = global.Promise;
 
 export const HYGIENE: IHygiene = {
   shaved: false,
   showered: false,
-  brushedTeeth: false,
+  brushedTeeth: 0,
   replacedBedding: false,
   washedClothes: false,
 };
 
-const hygieneSchema = new Schema<IHygiene>({
-  shaved: {
-    type: Boolean,
-    default: false,
-  },
-  showered: {
-    type: Boolean,
-    default: false,
-  },
-  brushedTeeth: {
-    type: Boolean,
-    default: false,
-  },
-  replacedBedding: {
-    type: Boolean,
-    default: false,
-  },
-  washedClothes: {
-    type: Boolean,
-    default: false,
-  },
+export const hygieneSchemaObject: Record<keyof IHygiene, any> = {
+  shaved: Boolean,
+  showered: Boolean,
+  brushedTeeth: Number,
+  replacedBedding: Boolean,
+  washedClothes: Boolean,
+};
+
+export const hygieneSchema = new Schema<IHygiene>(hygieneSchemaObject, {
+  _id: false,
 });
-
-const Hygiene = models.Hygiene || model<IHygiene>("Hygiene", hygieneSchema);
-
-export default Hygiene;
