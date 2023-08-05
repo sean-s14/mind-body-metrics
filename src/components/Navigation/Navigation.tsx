@@ -8,6 +8,11 @@ const ThemeSwitch = dynamic(
   { ssr: false }
 );
 
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/log", label: "Daily Log" },
+];
+
 export default function Navigation() {
   return (
     <nav
@@ -17,6 +22,16 @@ export default function Navigation() {
       <h1 className="text-xl xs:text-2xl font-bold">
         <Link href="/">Mind Body Metrics</Link>
       </h1>
+      <ul className="flex items-center space-x-2 xs:space-x-4">
+        {links.map(({ href, label }) => (
+          <li
+            key={`${href}${label}`}
+            // className="bg-slate-500 rounded p-0.5 px-2"
+          >
+            <Link href={href}>{label}</Link>
+          </li>
+        ))}
+      </ul>
       <ThemeSwitch />
     </nav>
   );
