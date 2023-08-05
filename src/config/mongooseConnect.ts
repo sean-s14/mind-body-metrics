@@ -27,7 +27,9 @@ export default async function mongooseConnect() {
         useUnifiedTopology: true,
       } as ConnectOptions)
       .then((mongoose) => {
-        console.log("Connected to MongoDB");
+        if (process.env.NODE_ENV !== "test") {
+          console.log("Connected to MongoDB");
+        }
         return mongoose;
       })
       .catch((err) => {
