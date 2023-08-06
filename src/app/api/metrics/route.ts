@@ -6,7 +6,40 @@ export async function GET(req: Request) {
   try {
     await mongooseConnect();
 
-    const metrics = await Metrics.find({}, null, { lean: true });
+    const url = new URL(req.url);
+    const params = Object.fromEntries(url.searchParams.entries());
+
+    type Query = {
+      createdAt?: {
+        $gte?: Date;
+        $lt?: Date;
+      };
+    };
+    const query: Query = {};
+    const projection = "_id createdAt updatedAt";
+    const options = { lean: true };
+
+    const year: string = params?.year || "";
+    const month: string = params?.month || "";
+
+    if (year && month) {
+      if (Number(month) < 1 || Number(month) > 12) {
+        return NextResponse.json(
+          { error: "Month must be between 1 and 12" },
+          { status: 400 }
+        );
+      }
+
+      const lt_year = Number(month) === 12 ? Number(year) + 1 : Number(year);
+      const lt_month = Number(month) === 12 ? 1 : Number(month) + 1;
+
+      query.createdAt = {
+        $gte: new Date(`${year}-${month}`),
+        $lt: new Date(`${lt_year}-${lt_month}`),
+      };
+    }
+
+    const metrics = await Metrics.find(query, projection, options);
 
     return NextResponse.json({ metrics }, { status: 200 });
   } catch (error) {
