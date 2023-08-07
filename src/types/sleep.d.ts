@@ -12,3 +12,11 @@ export interface ISleep {
   napStart?: Date;
   napEnd?: Date;
 }
+
+export interface ISleepClient {
+  sleepStart?: Date | string;
+  sleepEnd?: Date | string;
+  sleepQuality?: sleepQuality | string;
+  napStart?: Date | string;
+  napEnd?: Date | string;
+}
