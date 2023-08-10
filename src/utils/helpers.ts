@@ -1,3 +1,15 @@
+import { IDocument } from "@/types/document";
+
+export function getCategoryUrl(category: string, id?: string): string | null {
+  return id ? `/api/metrics/${id}?category=${category}` : null;
+}
+
+export async function fetchCategory<C>(url: string): Promise<IDocument<C>> {
+  const res = await fetch(url);
+  const { metrics }: { metrics: IDocument<C> } = await res.json();
+  return metrics;
+}
+
 export function newReducerState<C>(state: C, field: keyof C, value: any) {
   return {
     ...state,
