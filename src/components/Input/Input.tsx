@@ -7,12 +7,14 @@ export default function Input({
   name,
   value,
   onChange,
+  required,
 }: {
   className?: string;
   type: string;
   name: string;
   value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  required?: boolean;
 }) {
   const props = () => {
     if (type === "number") {
@@ -30,6 +32,7 @@ export default function Input({
       id={name}
       value={value}
       onChange={onChange}
+      required={required}
       {...props()}
     />
   );

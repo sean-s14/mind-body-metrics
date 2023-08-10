@@ -1,7 +1,9 @@
 "use client";
 
-import { ScrollContainer } from "react-indiana-drag-scroll";
-import "react-indiana-drag-scroll/dist/style.css";
+// import { ScrollContainer } from "react-indiana-drag-scroll"; // v3.0.3-alpha
+// import "react-indiana-drag-scroll/dist/style.css"; // v3.0.3-alpha
+import ScrollContainer from "react-indiana-drag-scroll";
+import { capitalise } from "@sean14/utils";
 
 export default function Tabs({
   tabs,
@@ -40,16 +42,16 @@ export default function Tabs({
             <button
               key={tab}
               className={[
-                `py-0.5 px-2 rounded ${
+                `py-0.5 px-2 rounded font-semibold ${
                   selectedKey === tab
                     ? "bg-slate-500 dark:bg-slate-600 text-slate-200"
-                    : ""
+                    : "text-slate-700 hover:text-slate-950 dark:text-slate-300 hover:dark:text-slate-100"
                 }`,
                 tabClassName || "py-0.5 px-2 rounded",
               ].join(" ")}
               onClick={() => onChange(tab)}
             >
-              {tabTitles ? tabTitles[tab] : tab}
+              {tabTitles ? capitalise(tabTitles[tab]) : tab}
             </button>
           ))}
         </ScrollContainer>

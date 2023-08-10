@@ -13,7 +13,7 @@ export default function FormContainer({
       className="flex flex-col gap-6 border-2 border-slate-600 rounded-lg p-4 xs:p-6"
     >
       <div className="flex flex-col gap-3">
-        <h2 className="text-base xs:text-2xl font-semibold text-center mb-2">
+        <h2 className="text-lg xs:text-2xl font-extrabold text-center mb-2">
           {title}
         </h2>
         {children}
