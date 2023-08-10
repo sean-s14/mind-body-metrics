@@ -2,7 +2,7 @@ import { Schema } from "mongoose";
 import { INutrition } from "@/types/nutrition";
 
 export const nutritionSchemaObject: Record<keyof INutrition, any> = {
-  waterDrank: Number,
+  water: Number,
   calories: Number,
   protein: {
     animal: Number,

@@ -2,8 +2,8 @@ import { Schema } from "mongoose";
 import { ISleep } from "@/types/sleep";
 
 export const sleepSchemaObject: Record<keyof ISleep, any> = {
-  sleepStart: Date,
-  sleepEnd: Date,
+  wake: Date,
+  sleep: Date,
   sleepQuality: {
     type: String,
     enum: ["poor", "fair", "good", "excellent"],

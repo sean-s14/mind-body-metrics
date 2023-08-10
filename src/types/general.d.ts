@@ -21,7 +21,7 @@ export interface IGeneralClient
   selfStimCount?: number;
   timeOfUrination?: string[];
   timeOfDefecation?: string[];
-  timeOfBreakfast?: Date | string;
-  timeOfLunch?: Date | string;
-  timeOfDinner?: Date | string;
+  timeOfBreakfast?: string;
+  timeOfLunch?: string;
+  timeOfDinner?: string;
 }

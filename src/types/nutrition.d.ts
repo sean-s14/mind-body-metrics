@@ -1,5 +1,5 @@
 export interface INutrition {
-  waterDrank?: number; // in milliliters
+  water?: number; // in milliliters
   calories?: number;
   protein?: IProtein;
   fat?: IFat;

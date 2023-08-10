@@ -6,17 +6,17 @@ export enum sleepQuality {
 }
 
 export interface ISleep {
-  sleepStart?: Date;
-  sleepEnd?: Date;
+  wake?: Date;
+  sleep?: Date;
   sleepQuality?: sleepQuality;
   napStart?: Date;
   napEnd?: Date;
 }
 
 export interface ISleepClient {
-  sleepStart?: Date | string;
-  sleepEnd?: Date | string;
+  wake?: string;
+  sleep?: string;
   sleepQuality?: sleepQuality | string;
-  napStart?: Date | string;
-  napEnd?: Date | string;
+  napStart?: string;
+  napEnd?: string;
 }

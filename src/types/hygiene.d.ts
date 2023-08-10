@@ -1,7 +1,8 @@
 export interface IHygiene {
   shaved?: boolean;
   showered?: boolean;
-  brushedTeeth?: Number;
-  replacedBedding?: boolean;
-  washedClothes?: boolean;
+  brushedTeeth?: number;
+  cutNails?: boolean;
+  cutToeNails?: boolean;
+  washedHair?: boolean;
 }
