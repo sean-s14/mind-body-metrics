@@ -8,6 +8,7 @@ import { READING } from "./reading";
 import { SLEEP, SLEEP_CLIENT } from "./sleep";
 
 export const METRICS: IMetrics = {
+  date: undefined,
   chores: CHORES,
   exercise: EXERCISE,
   general: GENERAL,
