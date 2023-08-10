@@ -9,6 +9,7 @@ import { ISleep, ISleepClient } from "./sleep";
 
 interface IMetrics {
   _id?: Types.ObjectId;
+  date?: Date;
   chores?: IChores;
   exercise?: IExercise;
   general?: IGeneral;

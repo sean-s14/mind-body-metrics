@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import mongooseConnect from "@/config/mongooseConnect";
 import Metrics from "@/schemas/metrics";
+import { cleanObject } from "@sean14/utils";
 
 export async function GET(req: Request) {
   try {
@@ -10,13 +11,13 @@ export async function GET(req: Request) {
     const params = Object.fromEntries(url.searchParams.entries());
 
     type Query = {
-      createdAt?: {
+      date?: {
         $gte?: Date;
         $lt?: Date;
       };
     };
     const query: Query = {};
-    const projection = "_id createdAt updatedAt";
+    const projection = "_id createdAt updatedAt date";
     const options = { lean: true };
 
     const year: string = params?.year || "";
@@ -33,7 +34,7 @@ export async function GET(req: Request) {
       const lt_year = Number(month) === 12 ? Number(year) + 1 : Number(year);
       const lt_month = Number(month) === 12 ? 1 : Number(month) + 1;
 
-      query.createdAt = {
+      query.date = {
         $gte: new Date(`${year}-${month}`),
         $lt: new Date(`${lt_year}-${lt_month}`),
       };
@@ -56,11 +57,19 @@ export async function POST(req: Request) {
     await mongooseConnect();
 
     const body = await req.json();
-    const metrics = await Metrics.create(body);
+    const cleanBody = cleanObject(body);
+    const metrics = await Metrics.create(cleanBody);
 
-    return NextResponse.json({ metrics }, { status: 200 });
-  } catch (error) {
+    return NextResponse.json({ metrics }, { status: 201 });
+  } catch (error: any) {
     console.log(error);
+    if (error?.code === 11000) {
+      return NextResponse.json(
+        { error: "A log with this date already exists" },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       { error: "Something went wrong" },
       { status: 500 }

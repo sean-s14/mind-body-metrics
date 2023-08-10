@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import mongooseConnect from "@/config/mongooseConnect";
 import Metrics from "@/schemas/metrics";
+import { cleanObject } from "@sean14/utils";
 
 export async function GET(
   req: Request,
@@ -16,6 +17,9 @@ export async function GET(
       _id?: string;
     };
     const query: Query = {};
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+    }
     query._id = id;
 
     const category: string = params?.category || "";
@@ -42,24 +46,9 @@ export async function PATCH(
     await mongooseConnect();
 
     const body = await req.json();
+    const cleanBody = cleanObject(body);
 
-    // Loop through each key in body and check if it has another object to loop through
-    // If it does, loop through that object and check if any of its values are falsy
-    // If any of its values are falsy, set them to undefined
-    // If any of its values are truthy, set them to the value
-    for (const key in body) {
-      if (typeof body[key] === "object") {
-        for (const subKey in body[key]) {
-          if (!body[key][subKey]) {
-            body[key][subKey] = undefined;
-          }
-        }
-      } else if (!body[key]) {
-        body[key] = undefined;
-      }
-    }
-
-    const metrics = await Metrics.findOneAndUpdate({ _id: id }, body, {
+    const metrics = await Metrics.findOneAndUpdate({ _id: id }, cleanBody, {
       new: true,
       lean: true,
     });

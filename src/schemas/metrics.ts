@@ -12,6 +12,14 @@ mongoose.Promise = global.Promise;
 
 const metricsSchema = new Schema<IMetrics>(
   {
+    date: {
+      type: Date,
+      required: true,
+      unique: true,
+      set: (date: Date) => {
+        return new Date(new Date(date).toISOString().substring(0, 10));
+      },
+    },
     chores: choresSchema,
     exercise: exerciseSchema,
     general: generalSchema,
