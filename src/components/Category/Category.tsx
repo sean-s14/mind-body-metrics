@@ -57,28 +57,33 @@ export default function Category<Server, Client>({
     e.preventDefault();
     if (!state) return console.log("no state data");
     const headers = { "Content-Type": "application/json" };
-    const body = JSON.stringify({ [category]: state, date });
     if (isNew) {
       fetch("/api/metrics", {
         method: "POST",
         headers,
-        body,
+        body: JSON.stringify({ [category]: state, date }),
       })
         .then((res) => res.json())
         .then((data) => {
           dispatch({ type: "replaceAllData", payload: initialState });
           setDate(new Date().toISOString());
-          console.log(data);
+          if (process.env.NODE_ENV === "development") {
+            console.log(data);
+          }
         })
         .catch((err) => console.log(err));
     } else {
       fetch(`/api/metrics/${id}`, {
         method: "PATCH",
         headers,
-        body,
+        body: JSON.stringify({ [category]: state }),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => {
+          if (process.env.NODE_ENV === "development") {
+            console.log(data);
+          }
+        })
         .catch((err) => console.log(err));
     }
   }
@@ -157,7 +162,7 @@ export default function Category<Server, Client>({
               type={type}
               name={name}
               value={
-                type === "time" && typeof value === "string"
+                type === "time" && typeof value === "string" && value !== ""
                   ? dateToTime(value)
                   : value
               }

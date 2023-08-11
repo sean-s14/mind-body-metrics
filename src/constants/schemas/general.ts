@@ -59,7 +59,6 @@ export const GENERAL_ARRAY_FIELDS: {
 ];
 
 export function generalReducer(state: IGeneralClient, action: any) {
-  console.log("Action:", action);
   switch (action.type) {
     case "replaceAllData":
       return action.payload;

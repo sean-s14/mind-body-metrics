@@ -6,7 +6,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="flex justify-center items-center px-4 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-200"
+      className="flex justify-center items-center px-4 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-200  text-sm xs:text-base"
       style={{ height: DIMENSIONS.FOOTER_HEIGHT }}
     >
       <ul className="flex flex-col gap-2">
