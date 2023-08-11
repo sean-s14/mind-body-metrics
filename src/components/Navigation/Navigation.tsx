@@ -33,7 +33,7 @@ export default function Navigation() {
       style={{ height: DIMENSIONS.NAV_HEIGHT }}
       className="flex items-center justify-between px-4 xs:px-6 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-200"
     >
-      <div className="hidden">
+      <div className="absolute">
         <ToastContainer
           position="top-center"
           autoClose={2000}
