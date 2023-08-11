@@ -16,6 +16,7 @@ import { useTheme } from "next-themes";
 
 const links = [
   { href: "/", label: "Home" },
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/log", label: "Daily Log" },
 ];
 
@@ -32,25 +33,29 @@ export default function Navigation() {
       style={{ height: DIMENSIONS.NAV_HEIGHT }}
       className="flex items-center justify-between px-4 xs:px-6 bg-slate-200 dark:bg-slate-600 text-slate-600 dark:text-slate-200"
     >
-      <ToastContainer
-        position="top-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick={true}
-        rtl={false}
-        pauseOnFocusLoss={true}
-        draggable={true}
-        pauseOnHover={true}
-        theme={theme === "light" ? "light" : "dark"}
-        progressStyle={{
-          background: "#07bc0c",
-        }}
-        className="text-base xs:text-lg min-w-fit max-w-full"
-        toastClassName={
-          "xs:rounded-lg bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-200 h-[80px] xs:h-fit"
-        }
-      />
+      <div className="hidden">
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={true}
+          closeOnClick={true}
+          rtl={false}
+          pauseOnFocusLoss={true}
+          draggable={true}
+          pauseOnHover={true}
+          theme={theme === "light" ? "light" : "dark"}
+          progressStyle={{
+            background: "#07bc0c",
+          }}
+          className="text-base xs:text-lg min-w-fit max-w-full"
+          toastClassName={
+            "xs:rounded-lg bg-slate-100 dark:bg-slate-950 text-slate-700 dark:text-slate-200 h-[80px] xs:h-fit"
+          }
+        />
+      </div>
+
+      {/* Menu Toggle */}
       <button
         className="flex sm:hidden transition-colors rounded-lg p-1.5 hover:bg-slate-400/40"
         onClick={toggleMenu}

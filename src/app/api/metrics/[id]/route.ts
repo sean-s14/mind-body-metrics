@@ -23,7 +23,7 @@ export async function GET(
     query._id = id;
 
     const category: string = params?.category || "";
-    const projection = `_id createdAt updatedAt ` + category;
+    const projection = "_id createdAt updatedAt date " + category;
     const options = { lean: true };
 
     const metrics = await Metrics.findById(query, projection, options);
