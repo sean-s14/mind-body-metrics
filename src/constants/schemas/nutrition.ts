@@ -156,9 +156,9 @@ export function nutritionReducer(state: INutrition, action: any) {
     case "replaceAllData":
       return action.payload;
     case "water":
-      return newReducerState<INutrition>(state, action, "water");
+      return newReducerState<INutrition>(state, "water", action.payload);
     case "calories":
-      return newReducerState<INutrition>(state, action, "calories");
+      return newReducerState<INutrition>(state, "calories", action.payload);
     case "protein.animal":
       return newNestedReducerState<INutrition, IProtein>(
         state,

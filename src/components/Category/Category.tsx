@@ -17,10 +17,11 @@ import {
 } from "@/utils/handlers/category";
 import { dateToTime, isoToDate } from "@/utils/date";
 import { FiDelete } from "react-icons/fi";
+import { toast } from "react-toastify";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const inputContainerClassName = "flex items-center gap-2 max-w-fit";
 
-// TODO: Add toasts for success/error messages
 export default function Category<Server, Client>({
   id,
   category,
@@ -49,9 +50,14 @@ export default function Category<Server, Client>({
   );
   const [date, setDate] = useState<string>(new Date().toISOString());
 
-  // TODO: Add error and loading states
+  // TODO: Improve error component
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex w-full min-h-full items-start justify-center">
+        <AiOutlineLoading3Quarters size={50} className="animate-spin" />
+      </div>
+    );
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -70,8 +76,18 @@ export default function Category<Server, Client>({
           if (process.env.NODE_ENV === "development") {
             console.log(data);
           }
+          if (data.error) {
+            toast.error(data.error, {
+              progressStyle: { backgroundColor: "#f56565" },
+            });
+          } else {
+            toast.success("Successfully added new metric");
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          toast.error(err);
+        });
     } else {
       fetch(`/api/metrics/${id}`, {
         method: "PATCH",
@@ -83,8 +99,18 @@ export default function Category<Server, Client>({
           if (process.env.NODE_ENV === "development") {
             console.log(data);
           }
+          if (data.error) {
+            toast.error(data.error, {
+              progressStyle: { backgroundColor: "#f56565" },
+            });
+          } else {
+            toast.success("Successfully updated metric");
+          }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          toast.error(err);
+        });
     }
   }
 

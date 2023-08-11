@@ -50,6 +50,7 @@ import {
   SLEEP_CLIENT,
 } from "@/constants/schemas/sleep";
 import { TCategories } from "@/types/document";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const years = Array.from({ length: 3 }, (_, i) => 2023 + i);
 const months = Array.from({ length: 12 }, (_, i) => i);
@@ -151,12 +152,12 @@ export default function DailyActivityLog() {
     fetchDays
   );
 
-  // TODO: Improve error and loading components
+  // TODO: Improve error component
   if (metricsError) return <div>failed to load</div>;
   if (metricsIsLoading)
     return (
-      <div className="flex w-full h-full items-center justify-center">
-        loading...
+      <div className="flex w-full min-h-full items-center justify-center">
+        <AiOutlineLoading3Quarters size={100} className="animate-spin" />
       </div>
     );
 
