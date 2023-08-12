@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import mongooseConnect from "@/config/mongooseConnect";
 import Metrics from "@/schemas/metrics";
-import { cleanObject } from "@sean14/utils";
+import { convertFalsyValues } from "@sean14/utils";
 
 export async function GET(
   req: Request,
@@ -46,7 +46,7 @@ export async function PATCH(
     await mongooseConnect();
 
     const body = await req.json();
-    const cleanBody = cleanObject(body);
+    const cleanBody = convertFalsyValues(body, undefined);
 
     const metrics = await Metrics.findOneAndUpdate({ _id: id }, cleanBody, {
       new: true,
