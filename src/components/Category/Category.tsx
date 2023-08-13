@@ -5,6 +5,7 @@ import FormContainer from "@/components/FormContainer/FormContainer";
 import Input from "@/components/Input/Input";
 import Label from "@/components/Label/Label";
 import Button from "@/components/Button/Button";
+import Select from "../Select/Select";
 import useReducerSWR from "@/hooks/useReducerSWR";
 import { splitOnUpper, capitaliseAll, capitalise } from "@sean14/utils";
 import { IDocument, TCategories } from "@/types/document";
@@ -181,7 +182,20 @@ export default function Category<Server, Client>({
 
         // Generate Input Element
         let inputElement = <div>Error</div>;
-        if (typeof value === "number" || typeof value === "string") {
+        if (name === "sleepQuality") {
+          inputElement = (
+            <Select
+              defaultValue=""
+              title="select"
+              options={["poor", "fair", "good", "excellent"]}
+              onChange={(e) => {
+                const value = e.target.value === "select" ? "" : e.target.value;
+                dispatch({ type: "sleepQuality", payload: value });
+              }}
+              className="rounded p-1 border-2"
+            />
+          );
+        } else if (typeof value === "number" || typeof value === "string") {
           inputElement = (
             <Input
               className="max-w-fit"
