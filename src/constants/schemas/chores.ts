@@ -71,3 +71,44 @@ export function choresReducer(state: IChores, action: any) {
       throw new Error();
   }
 }
+
+export const CHORES_AGGREGATION_STAGES = [
+  {
+    $addFields: {
+      chores: { $ifNull: ["$chores", {}] },
+    },
+  },
+  {
+    $replaceRoot: { newRoot: "$chores" },
+  },
+  {
+    $group: {
+      _id: null,
+      dishWashing: { $avg: { $sum: "$dishWashing" } },
+      groceryShopping: { $avg: { $sum: "$groceryShopping" } },
+      cooking: { $avg: { $sum: "$cooking" } },
+      rubbishDisposal: {
+        $avg: { $sum: { $cond: ["$rubbishDisposal", 1, 0] } },
+      },
+      laundry: { $avg: { $sum: { $cond: ["$laundry", 1, 0] } } },
+      vacuuming: { $avg: { $sum: { $cond: ["$vacuuming", 1, 0] } } },
+      windowCleaning: { $avg: { $sum: { $cond: ["$windowCleaning", 1, 0] } } },
+      replacedBedding: {
+        $avg: { $sum: { $cond: ["$replacedBedding", 1, 0] } },
+      },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      dishWashing: { $round: ["$dishWashing", 2] },
+      groceryShopping: { $round: ["$groceryShopping", 2] },
+      cooking: { $round: ["$cooking", 2] },
+      rubbishDisposal: { $round: ["$rubbishDisposal", 2] },
+      laundry: { $round: ["$laundry", 2] },
+      vacuuming: { $round: ["$vacuuming", 2] },
+      windowCleaning: { $round: ["$windowCleaning", 2] },
+      replacedBedding: { $round: ["$replacedBedding", 2] },
+    },
+  },
+];

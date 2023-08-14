@@ -23,3 +23,5 @@ export const METRICS_CLIENT: IMetricsClient = {
   general: GENERAL_CLIENT,
   sleep: SLEEP_CLIENT,
 };
+
+// TODO: Build an aggregation pipeline for each category

@@ -261,3 +261,5 @@ export function exerciseReducer(state: IExercise, action: any) {
       throw new Error();
   }
 }
+
+// TODO: Build an aggregation pipeline for exercise

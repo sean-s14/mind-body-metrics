@@ -95,3 +95,34 @@ export function readingReducer(state: IReading, action: any) {
       throw new Error();
   }
 }
+
+export const READING_AGGREGATION_STAGES = [
+  {
+    $addFields: {
+      reading: { $ifNull: ["$reading", {}] },
+    },
+  },
+  {
+    $replaceRoot: { newRoot: "$reading" },
+  },
+  {
+    $group: {
+      _id: null,
+      articles: { $avg: { $sum: "$articles" } },
+      educationalWords: { $avg: { $sum: "$educational.words" } },
+      educationalPages: { $avg: { $sum: "$educational.pages" } },
+      recreationalWords: { $avg: { $sum: "$recreational.words" } },
+      recreationalPages: { $avg: { $sum: "$recreational.pages" } },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      articles: { $round: ["$articles", 2] },
+      educationalWords: { $round: ["$educationalWords", 2] },
+      educationalPages: { $round: ["$educationalPages", 2] },
+      recreationalWords: { $round: ["$recreationalWords", 2] },
+      recreationalPages: { $round: ["$recreationalPages", 2] },
+    },
+  },
+];

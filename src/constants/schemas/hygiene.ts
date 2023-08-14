@@ -57,3 +57,36 @@ export function hygieneReducer(state: IHygiene, action: any) {
       throw new Error();
   }
 }
+
+export const HYGIENE_AGGREGATION_STAGES = [
+  {
+    $addFields: {
+      hygiene: { $ifNull: ["$hygiene", {}] },
+    },
+  },
+  {
+    $replaceRoot: { newRoot: "$hygiene" },
+  },
+  {
+    $group: {
+      _id: null,
+      brushedTeeth: { $avg: { $sum: "$brushedTeeth" } },
+      shaved: { $avg: { $sum: { $cond: ["$shaved", 1, 0] } } },
+      showered: { $avg: { $sum: { $cond: ["$showered", 1, 0] } } },
+      cutNails: { $avg: { $sum: { $cond: ["$cutNails", 1, 0] } } },
+      cutToeNails: { $avg: { $sum: { $cond: ["$cutToeNails", 1, 0] } } },
+      washedHair: { $avg: { $sum: { $cond: ["$washedHair", 1, 0] } } },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      brushedTeeth: { $round: ["$brushedTeeth", 2] },
+      shaved: { $round: ["$shaved", 2] },
+      showered: { $round: ["$showered", 2] },
+      cutNails: { $round: ["$cutNails", 2] },
+      cutToeNails: { $round: ["$cutToeNails", 2] },
+      washedHair: { $round: ["$washedHair", 2] },
+    },
+  },
+];

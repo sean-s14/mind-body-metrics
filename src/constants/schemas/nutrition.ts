@@ -299,3 +299,36 @@ export function nutritionReducer(state: INutrition, action: any) {
       throw new Error();
   }
 }
+
+export const NUTRITION_AGGREGATION_STAGES = [
+  {
+    $addFields: {
+      nutrition: { $ifNull: ["$nutrition", {}] },
+    },
+  },
+  {
+    $replaceRoot: { newRoot: "$nutrition" },
+  },
+  {
+    $match: {
+      $or: [
+        { water: { $exists: true, $ne: 0 } },
+        { calories: { $exists: true, $ne: 0 } },
+      ],
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      water: { $avg: { $sum: "$water" } },
+      calories: { $avg: { $sum: "$calories" } },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      water: { $round: ["$water", 2] },
+      calories: { $round: ["$calories", 2] },
+    },
+  },
+];

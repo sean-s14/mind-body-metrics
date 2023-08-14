@@ -137,3 +137,51 @@ export function generalReducer(state: IGeneralClient, action: any) {
       throw new Error();
   }
 }
+
+export const GENERAL_AGGREGATION_STAGES = [
+  {
+    $addFields: {
+      general: { $ifNull: ["$general", {}] },
+    },
+  },
+  {
+    $replaceRoot: { newRoot: "$general" },
+  },
+  {
+    $addFields: {
+      selfStimeTime: { $divide: ["$selfStimTime", "$selfStimCount"] },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      selfStimeTime: 1,
+      selfStimCount: 1,
+      urinationCount: { $size: { $ifNull: ["$timeOfUrination", []] } },
+      defecationCount: { $size: { $ifNull: ["$timeOfDefecation", []] } },
+    },
+  },
+  {
+    $match: {
+      urinationCount: { $ne: 0 },
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      selfStimeTimeAvg: { $avg: "$selfStimeTime" },
+      selfStimCountAvg: { $avg: "$selfStimCount" },
+      urinationCountAvg: { $avg: "$urinationCount" },
+      defecationCountAvg: { $avg: "$defecationCount" },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      selfStimeTimeAvg: { $round: ["$selfStimeTimeAvg", 2] },
+      selfStimCountAvg: { $round: ["$selfStimCountAvg", 2] },
+      urinationCountAvg: { $round: ["$urinationCountAvg", 2] },
+      defecationCountAvg: { $round: ["$defecationCountAvg", 2] },
+    },
+  },
+];
