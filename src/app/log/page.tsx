@@ -190,20 +190,20 @@ export default function DailyActivityLog() {
       <div className="flex gap-4 mt-4 max-w-[90%]">
         <Select
           title="Year"
-          defaultValue={year}
+          value={year}
           options={years}
           onChange={handleChangeYear}
         />
         <Select
           title="Month"
-          defaultValue={month}
+          value={month}
           options={months}
           optionsTitles={monthsString}
           onChange={handleChangeMonth}
         />
         <Select
           title="Day"
-          defaultValue={day}
+          value={day}
           options={days}
           onChange={handleChangeDay}
         />

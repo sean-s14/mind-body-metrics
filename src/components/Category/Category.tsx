@@ -185,7 +185,7 @@ export default function Category<Server, Client>({
         if (name === "sleepQuality") {
           inputElement = (
             <Select
-              defaultValue=""
+              value={value ? value : ""}
               title="select"
               options={["poor", "fair", "good", "excellent"]}
               onChange={(e) => {

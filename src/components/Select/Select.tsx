@@ -1,5 +1,5 @@
 export default function Select({
-  defaultValue,
+  value,
   title,
   options,
   optionsTitles,
@@ -8,7 +8,7 @@ export default function Select({
   id,
   className,
 }: {
-  defaultValue?: string | number;
+  value?: string | number;
   title: string;
   options: string[] | number[];
   optionsTitles?: string[];
@@ -23,7 +23,7 @@ export default function Select({
     <select
       name={name || ""}
       id={id || ""}
-      defaultValue={defaultValue}
+      value={value}
       className={[
         "border-slate-500 bg-slate-400 dark:border-slate-600 dark:bg-slate-900 text-slate-900 dark:text-slate-300",
         className || defaultClassName,
